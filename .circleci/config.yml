@@ -15,6 +15,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Print PATH"
+          command: echo $PATH
+      - run:
           name: "Say hello"
           command: "echo Hello, World!"
 
