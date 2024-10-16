@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import './components/';
 import logo from './images/logo.png';
 import { createRoot } from 'react-dom/client';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const root = createRoot(document.getElementById('root'));
 root.render(<App />);
@@ -42,11 +43,12 @@ function Login(){
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e){
     e.preventDefault();
 
     try{
-      const response = await fetch('/login', {
+      const response = await
+       fetch('/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -59,41 +61,41 @@ function Login(){
     console.log('Login successful!');
   }else{
     const data = await response.json();
-    setError(data.message || 'Login failed');
+    setError(data.message || 'Login failed');   
+
   } 
 }catch (error){
-    console.error('Login error:', error);
-    setError('An error occurred during login.')
-  }
+  console.error('Login error:', error);
+  setError('An error occurred during login.')
+}
 };
 
-  return(
-    <div>
-      <h1>Please enter your account number and password:</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="accountNumber">Account Number:</label>
-          <input
-            type="number"
-            id="accountNumber"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value)} required />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="passowrd"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      {error && <p>{error}</p>}
-    </div>
-  );
+return(
+  <div>
+    <h1>Please enter your account number and password:</h1>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="accountNumber">Account Number:</label>
+        <input
+          type="number"
+          id="accountNumber"
+          value={accountNumber}
+          onChange={(e) => setAccountNumber(e.target.value)} required />
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)} required />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    {error && <p>{error}</p>}
+  </div>
+);
 }
-export Login;
 
 function App() {
   return (
@@ -117,4 +119,3 @@ function App() {
 }
 
 export default App;
-export default Login;
